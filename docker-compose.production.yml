@@ -1,0 +1,105 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-aquaguard}
+      POSTGRES_USER: ${POSTGRES_USER:-aquaguard}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be supplied securely}
+    volumes:
+      - aquaguard_prod_pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-aquaguard} -d ${POSTGRES_DB:-aquaguard}"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  ai:
+    build:
+      context: ./ai-service
+    image: aquaguard-ai:${AQUAGUARD_RELEASE_TAG:?AQUAGUARD_RELEASE_TAG is required}
+    restart: unless-stopped
+    expose:
+      - "8000"
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    image: aquaguard-backend:${AQUAGUARD_RELEASE_TAG:?AQUAGUARD_RELEASE_TAG is required}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL must be supplied securely}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be supplied securely}
+      CORS_ORIGIN: ${CORS_ORIGIN:?CORS_ORIGIN must be supplied}
+      TRUST_PROXY_HOPS: "1"
+      DEVICE_API_KEY: ${DEVICE_API_KEY:?DEVICE_API_KEY must be supplied securely}
+      DEVICE_REQUIRE_TLS: "true"
+      DEVICE_MAX_CLOCK_SKEW_MS: ${DEVICE_MAX_CLOCK_SKEW_MS:-300000}
+      DEVICE_MAX_BUFFER_AGE_MS: ${DEVICE_MAX_BUFFER_AGE_MS:-604800000}
+      WEATHER_SYNC_ENABLED: ${WEATHER_SYNC_ENABLED:-true}
+      WEATHER_SYNC_INTERVAL_MS: ${WEATHER_SYNC_INTERVAL_MS:-900000}
+      WEATHER_LATITUDE: ${WEATHER_LATITUDE:-12.9352}
+      WEATHER_LONGITUDE: ${WEATHER_LONGITUDE:-77.6245}
+      WEATHER_TIMEZONE: ${WEATHER_TIMEZONE:-Asia/Kolkata}
+      WEATHER_STATION_CODE: ${WEATHER_STATION_CODE:-WX-BLR-01}
+      AI_SERVICE_URL: http://ai:8000
+      VISION_MAX_BYTES: ${VISION_MAX_BYTES:-10485760}
+      SATELLITE_ENABLED: ${SATELLITE_ENABLED:-false}
+      SATELLITE_PROVIDER: ${SATELLITE_PROVIDER:-sentinel-hub}
+      SATELLITE_COLLECTION: ${SATELLITE_COLLECTION:-sentinel-2-l2a}
+      SATELLITE_TILE_URL: ${SATELLITE_TILE_URL:-}
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY:-}
+      SENTINEL_HUB_CLIENT_ID: ${SENTINEL_HUB_CLIENT_ID:-}
+      SENTINEL_HUB_CLIENT_SECRET: ${SENTINEL_HUB_CLIENT_SECRET:-}
+    command: ["sh", "-c", "node src/db/migrate.js && node src/server.js"]
+    expose:
+      - "5000"
+    networks:
+      - backend
+      - frontend
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:5000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend-deploy/Dockerfile.production
+    image: aquaguard-frontend:${AQUAGUARD_RELEASE_TAG:?AQUAGUARD_RELEASE_TAG is required}
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ${TLS_CERT_DIR:?TLS_CERT_DIR containing fullchain.pem and privkey.pem is required}:/etc/nginx/tls:ro
+    networks:
+      - frontend
+
+networks:
+  backend:
+    internal: true
+  frontend:
+
+volumes:
+  aquaguard_prod_pgdata:

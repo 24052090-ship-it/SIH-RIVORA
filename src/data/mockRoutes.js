@@ -1,0 +1,2 @@
+export const routeStats={distance:'6.4 km',time:'18 min',risk:'LOW',avoided:3};
+export const routeLines={safe:[[12.935,77.62],[12.94,77.64],[12.95,77.67],[12.965,77.69]],risky:[[12.935,77.62],[12.945,77.65],[12.95,77.68]],flooded:[[12.93,77.63],[12.94,77.66],[12.955,77.68]]};

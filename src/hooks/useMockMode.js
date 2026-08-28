@@ -1,0 +1,1 @@
+export default function useMockMode(){return import.meta.env.VITE_USE_MOCKS!=='false'}

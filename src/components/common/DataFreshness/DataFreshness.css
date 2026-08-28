@@ -1,0 +1,1 @@
+.data-freshness{display:inline-flex;align-items:center;gap:6px;color:var(--text-secondary);font-size:10px}.data-freshness.stale{color:var(--warning)}

@@ -1,0 +1,2 @@
+event_id,start_utc,end_utc,zone_id,severity,label_source
+EVT-001,2026-01-01T00:00:00Z,2026-01-01T03:00:00Z,ZONE-01,HIGH,REPLACE_WITH_AUTHORITY_RECORD

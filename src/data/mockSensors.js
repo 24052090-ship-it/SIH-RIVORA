@@ -1,0 +1,1 @@
+export const sensors=[{id:'SN-104',type:'Rainfall',value:'72 mm/hr',status:'ONLINE',health:98,zone:'Zone 4'},{id:'SN-118',type:'Water Level',value:'2.8 m',status:'ONLINE',health:94,zone:'Zone 2'},{id:'SN-203',type:'Rainfall',value:'51 mm/hr',status:'DEGRADED',health:71,zone:'Zone 7'},{id:'SN-225',type:'Drain Level',value:'81%',status:'ONLINE',health:91,zone:'Zone 5'}];

@@ -1,0 +1,1 @@
+AquaGuard is an AI-powered urban resilience platform that monitors rainfall and drainage conditions, predicts flood risk, detects waterlogging/blockages from images, maps hazards, recommends safer routes, and coordinates municipal response.

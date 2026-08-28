@@ -1,0 +1,1 @@
+export const rainfall=[{time:'00:00',value:12},{time:'03:00',value:18},{time:'06:00',value:24},{time:'09:00',value:19},{time:'12:00',value:31},{time:'15:00',value:26},{time:'18:00',value:38},{time:'21:00',value:44}];

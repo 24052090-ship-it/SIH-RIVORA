@@ -1,0 +1,1 @@
+const base=process.env.API_BASE_URL||'http://localhost:5000/api';const r=await fetch(`${base}/validation/data-quality`);if(!r.ok)throw new Error(`Data-quality endpoint failed: ${r.status}`);const d=await r.json();const empty=(d.checks||[]).filter(x=>x.status==='empty');console.log(`Ingestion readiness: ${d.checks?.length||0} tables checked; ${empty.length} empty`);

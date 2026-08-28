@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.git/
+**/.env
+**/.env.*
+!.env.production
+.venv/
+venv/
+ai-service/.venv/
+**/__pycache__/
+**/*.pyc
+backups/
+*.log
+apply-phase*.cjs

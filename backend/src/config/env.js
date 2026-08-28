@@ -1,0 +1,27 @@
+import 'dotenv/config';
+export const env = {
+  port: Number(process.env.PORT || 5000),
+  databaseUrl: process.env.DATABASE_URL || 'postgresql://aquaguard:aquaguard@localhost:5432/aquaguard',
+  jwtSecret: process.env.JWT_SECRET || 'dev-only-change-me',
+  corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  trustProxyHops: Math.max(0, Number(process.env.TRUST_PROXY_HOPS || 0)),
+  deviceApiKey: process.env.DEVICE_API_KEY || 'phase3-device-key-change-me',
+  deviceRequireTls: String(process.env.DEVICE_REQUIRE_TLS || 'false') === 'true',
+  deviceMaxClockSkewMs: Math.max(0, Number(process.env.DEVICE_MAX_CLOCK_SKEW_MS || 300000)),
+  deviceMaxBufferAgeMs: Math.max(60000, Number(process.env.DEVICE_MAX_BUFFER_AGE_MS || 604800000)),
+  weatherSyncEnabled: String(process.env.WEATHER_SYNC_ENABLED || 'false') === 'true',
+  weatherSyncIntervalMs: Math.max(60000, Number(process.env.WEATHER_SYNC_INTERVAL_MS || 900000)),
+  weatherLatitude: Number(process.env.WEATHER_LATITUDE || 12.9352),
+  weatherLongitude: Number(process.env.WEATHER_LONGITUDE || 77.6245),
+  weatherTimezone: process.env.WEATHER_TIMEZONE || 'Asia/Kolkata',
+  weatherStationCode: process.env.WEATHER_STATION_CODE || 'WX-BLR-01',
+  aiServiceUrl: process.env.AI_SERVICE_URL || 'http://localhost:8000',
+  visionMaxBytes: Math.min(10 * 1024 * 1024, Number(process.env.VISION_MAX_BYTES || 10 * 1024 * 1024)),
+  satelliteEnabled: String(process.env.SATELLITE_ENABLED || 'false') === 'true',
+  satelliteProvider: process.env.SATELLITE_PROVIDER || 'sentinel-hub',
+  satelliteCollection: process.env.SATELLITE_COLLECTION || 'sentinel-2-l2a',
+  satelliteTileUrl: process.env.SATELLITE_TILE_URL || '',
+  googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || '',
+  sentinelHubClientId: process.env.SENTINEL_HUB_CLIENT_ID || '',
+  sentinelHubClientSecret: process.env.SENTINEL_HUB_CLIENT_SECRET || ''
+};

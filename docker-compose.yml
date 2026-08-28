@@ -1,0 +1,25 @@
+services:
+  ai:
+    build:
+      context: ./ai-service
+    container_name: aquaguard-ai
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: aquaguard-postgis
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: aquaguard
+      POSTGRES_USER: aquaguard
+      POSTGRES_PASSWORD: aquaguard
+    ports:
+      - "5432:5432"
+    volumes:
+      - aquaguard_pgdata:/var/lib/postgresql/data
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+
+volumes:
+  aquaguard_pgdata:

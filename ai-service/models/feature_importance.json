@@ -1,0 +1,12 @@
+{
+  "water_level": 0.226602,
+  "blockage": 0.178979,
+  "rainfall_3h": 0.099642,
+  "drain_capacity": 0.083168,
+  "rainfall_1h": 0.080872,
+  "rainfall_24h": 0.07727,
+  "elevation": 0.072753,
+  "historical_incidents": 0.067809,
+  "slope": 0.058235,
+  "rainfall_15m": 0.054671
+}

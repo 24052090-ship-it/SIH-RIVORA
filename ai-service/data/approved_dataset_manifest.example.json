@@ -1,0 +1,8 @@
+{
+  "dataset_version": "replace-with-approved-version",
+  "source": "replace-with-authorized-source",
+  "status": "APPROVED",
+  "training_data": [],
+  "label_definition": "flood_event_within_prediction_horizon",
+  "geography": "replace-with-study-area"
+}

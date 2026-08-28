@@ -1,0 +1,448 @@
+.route-mode-block {
+  width: 100%;
+}
+
+.route-mode-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.route-mode-selector {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.route-mode-button {
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 10px;
+  padding: 9px 10px;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  transition: 0.2s ease;
+}
+
+.route-mode-button:hover {
+  border-color: rgba(0, 229, 255, 0.4);
+}
+
+.route-mode-button.active {
+  border-color: rgba(0, 229, 255, 0.75);
+  background: rgba(0, 229, 255, 0.08);
+}
+
+.route-mode-button strong,
+.route-mode-button span {
+  display: block;
+}
+
+.route-mode-button strong {
+  font-size: 0.78rem;
+}
+
+.route-mode-button span {
+  margin-top: 2px;
+  font-size: 0.68rem;
+  opacity: 0.65;
+}
+
+.route-tradeoff-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.route-tradeoff-card {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.35);
+}
+
+.route-tradeoff-card b,
+.route-tradeoff-card span {
+  display: block;
+}
+
+.route-tradeoff-card b {
+  font-size: 0.9rem;
+}
+
+.route-tradeoff-card span {
+  font-size: 0.7rem;
+  opacity: 0.65;
+}
+
+.route-reasoning strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.route-reasoning ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.route-reasoning li {
+  margin-bottom: 3px;
+}
+
+.route-comparison {
+  margin-top: 18px;
+}
+
+.route-comparison > strong {
+  display: block;
+  margin-bottom: 9px;
+}
+
+.route-alternative-list {
+  display: grid;
+  gap: 7px;
+}
+
+.route-alternative {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 10px;
+  padding: 9px 10px;
+  background: rgba(15, 23, 42, 0.28);
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.route-alternative.selected {
+  border-color: rgba(0, 229, 255, 0.65);
+  background: rgba(0, 229, 255, 0.07);
+}
+
+.route-alternative b,
+.route-alternative span {
+  display: block;
+}
+
+.route-alternative b {
+  font-size: 0.78rem;
+}
+
+.route-alternative span {
+  margin-top: 2px;
+  font-size: 0.67rem;
+  opacity: 0.65;
+}
+
+@media (max-width: 700px) {
+  .route-mode-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .route-tradeoff-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   Phase 3 — Advanced Safe Routing
+   ========================================================= */
+
+.route-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.route-form > label:nth-of-type(1) {
+  grid-column: 1;
+}
+
+.route-form > label:nth-of-type(2) {
+  grid-column: 2;
+}
+
+.route-mode-block {
+  grid-column: 1 / 3;
+  width: 100%;
+}
+
+.route-form > button {
+  grid-column: 3;
+  grid-row: 2;
+  align-self: end;
+  white-space: nowrap;
+}
+
+.route-mode-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.route-mode-selector {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.route-mode-button {
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 10px;
+  padding: 9px 10px;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  transition: 0.2s ease;
+}
+
+.route-mode-button:hover {
+  border-color: rgba(0, 229, 255, 0.4);
+}
+
+.route-mode-button.active {
+  border-color: rgba(0, 229, 255, 0.75);
+  background: rgba(0, 229, 255, 0.08);
+}
+
+.route-mode-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.route-mode-button strong,
+.route-mode-button span {
+  display: block;
+}
+
+.route-mode-button strong {
+  font-size: 0.78rem;
+}
+
+.route-mode-button span {
+  margin-top: 2px;
+  font-size: 0.68rem;
+  opacity: 0.65;
+}
+
+.route-tradeoff-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.route-tradeoff-card {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.35);
+}
+
+.route-tradeoff-card b,
+.route-tradeoff-card span {
+  display: block;
+}
+
+.route-tradeoff-card b {
+  font-size: 0.9rem;
+}
+
+.route-tradeoff-card span {
+  font-size: 0.7rem;
+  opacity: 0.65;
+}
+
+.route-reasoning strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.route-reasoning ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.route-reasoning li {
+  margin-bottom: 3px;
+}
+
+.route-comparison {
+  margin-top: 18px;
+}
+
+.route-comparison > strong {
+  display: block;
+  margin-bottom: 9px;
+}
+
+.route-alternative-list {
+  display: grid;
+  gap: 7px;
+}
+
+.route-alternative {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 10px;
+  padding: 9px 10px;
+  background: rgba(15, 23, 42, 0.28);
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+.route-alternative:hover {
+  border-color: rgba(0, 229, 255, 0.32);
+}
+
+.route-alternative.selected {
+  border-color: rgba(0, 229, 255, 0.65);
+  background: rgba(0, 229, 255, 0.07);
+}
+
+.route-alternative b,
+.route-alternative span {
+  display: block;
+}
+
+.route-alternative b {
+  font-size: 0.78rem;
+}
+
+.route-alternative span {
+  margin-top: 2px;
+  font-size: 0.67rem;
+  opacity: 0.65;
+}
+
+@media (max-width: 900px) {
+  .route-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .route-mode-block {
+    grid-column: 1 / -1;
+  }
+
+  .route-form > button {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .route-form {
+    grid-template-columns: 1fr;
+  }
+
+  .route-form > label:nth-of-type(1),
+  .route-form > label:nth-of-type(2),
+  .route-mode-block,
+  .route-form > button {
+    grid-column: 1;
+  }
+
+  .route-mode-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .route-tradeoff-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Phase 3 — result panel visual normalization */
+
+.route-info {
+  min-width: 0;
+}
+
+.route-risk {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.route-risk > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.route-risk b,
+.route-risk span {
+  display: block;
+}
+
+.route-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.route-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.route-stats b,
+.route-stats span {
+  display: block;
+}
+
+.route-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.route-note > div {
+  min-width: 0;
+}
+
+.traffic-benchmark {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.traffic-benchmark p {
+  margin: 0;
+}
+
+.route-segments > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 700px) {
+  .route-stats {
+    grid-template-columns: 1fr;
+  }
+}

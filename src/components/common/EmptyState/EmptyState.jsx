@@ -1,0 +1,1 @@
+export default function EmptyState({title='No data',copy='Nothing to show yet.'}){return <div className="empty-state glass"><strong>{title}</strong><span>{copy}</span></div>}

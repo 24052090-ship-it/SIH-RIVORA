@@ -1,0 +1,88 @@
+import os
+from pathlib import Path
+from typing import Any
+
+MODEL_VERSION = os.getenv('VISION_MODEL_VERSION', 'aquaguard-yolo-custom-v1')
+MODEL_PATH = Path(os.getenv('VISION_MODEL_PATH', str(Path(__file__).resolve().parents[1] / 'models' / 'aquaguard_yolo.pt')))
+
+CLASS_TO_SEVERITY = {
+    'blocked_drain': 'HIGH',
+    'overflowing_drain': 'CRITICAL',
+    'flooded_road': 'HIGH',
+    'waterlogging': 'HIGH',
+    'open_manhole': 'CRITICAL',
+    'garbage_blockage': 'MEDIUM',
+}
+
+_model = None
+
+
+def _load_model():
+    global _model
+    if _model is not None:
+        return _model
+    if not MODEL_PATH.exists():
+        return None
+    from ultralytics import YOLO
+    _model = YOLO(str(MODEL_PATH))
+    return _model
+
+
+def model_status() -> dict[str, Any]:
+    return {
+        'mode': 'custom-yolo',
+        'model_version': MODEL_VERSION,
+        'model_path': str(MODEL_PATH),
+        'ready': MODEL_PATH.exists(),
+        'classes': list(CLASS_TO_SEVERITY.keys()),
+    }
+
+
+def analyze_image(image_path: str, confidence: float = 0.25) -> dict[str, Any]:
+    model = _load_model()
+    if model is None:
+        raise FileNotFoundError(
+            'Custom AquaGuard YOLO weights are not installed. Train the model with '
+            'python scripts/train_yolo.py and place the resulting best.pt at '
+            f'{MODEL_PATH}.'
+        )
+
+    results = model.predict(source=image_path, conf=confidence, verbose=False)
+    detections: list[dict[str, Any]] = []
+    for result in results:
+        names = result.names or {}
+        boxes = result.boxes
+        if boxes is None:
+            continue
+        for box in boxes:
+            cls_id = int(box.cls[0].item())
+            score = float(box.conf[0].item())
+            xyxy = [round(float(v), 2) for v in box.xyxy[0].tolist()]
+            label = str(names.get(cls_id, cls_id)).lower().strip().replace(' ', '_')
+            detections.append({
+                'label': label,
+                'confidence': round(score, 4),
+                'severity': CLASS_TO_SEVERITY.get(label, 'INFO'),
+                'bbox': xyxy,
+            })
+
+    detections.sort(key=lambda x: x['confidence'], reverse=True)
+    top = detections[0] if detections else None
+    if top:
+        label = top['label']
+        severity = top['severity']
+        confidence_value = top['confidence']
+    else:
+        label = 'no_target_detected'
+        severity = 'LOW'
+        confidence_value = 0.0
+
+    return {
+        'model_version': MODEL_VERSION,
+        'label': label,
+        'severity': severity,
+        'confidence': confidence_value,
+        'detections': detections,
+        'status': 'ANALYZED',
+        'disclaimer': 'Custom AquaGuard YOLO inference. Validate model performance on local, labeled flood/drainage imagery before operational use.',
+    }

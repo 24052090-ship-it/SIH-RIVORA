@@ -1,0 +1,55 @@
+{
+  "name": "AquaGuard SIH Flood Response Demo",
+  "roadmapPhase": 30,
+  "applicationVersion": "31.0.0",
+  "mode": "controlled-demo",
+  "steps": [
+    {
+      "id": "citizen_context",
+      "label": "Citizen dashboard, GIS and report",
+      "evidence": "UI + PostGIS-backed application state"
+    },
+    {
+      "id": "ai_risk",
+      "label": "Flood inference and model provenance",
+      "evidence": "development model; no production accuracy claim"
+    },
+    {
+      "id": "multimodal_fusion",
+      "label": "Transparent risk fusion",
+      "evidence": "weighted decision-support score; not calibrated probability"
+    },
+    {
+      "id": "authority_incident",
+      "label": "Alert and incident command",
+      "evidence": "validated incident lifecycle and realtime events"
+    },
+    {
+      "id": "safe_route",
+      "label": "Flood-aware routing",
+      "evidence": "PostGIS/provider routing integration"
+    },
+    {
+      "id": "crew_dispatch",
+      "label": "Field assignment and mobile workflow",
+      "evidence": "validated field task lifecycle"
+    },
+    {
+      "id": "digital_twin",
+      "label": "What-if planning scenario",
+      "evidence": "clearly labelled simulation"
+    },
+    {
+      "id": "system_evidence",
+      "label": "Health, validation and recovery evidence",
+      "evidence": "Phase 28 + Phase 29 local validation"
+    }
+  ],
+  "forbiddenClaims": [
+    "live municipal deployment without evidence",
+    "model accuracy without approved held-out metrics",
+    "fusion score as calibrated probability",
+    "local smoke-load results as production SLA",
+    "simulated outputs as measured impact"
+  ]
+}

@@ -1,0 +1,34 @@
+# Node
+node_modules/
+dist/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+!.env.production
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# ML generated artifacts
+ai-service/.venv/
+ai-service/__pycache__/
+ai-service/**/*.pyc
+
+# Local model/data artifacts
+ai-service/models/*.pt
+ai-service/models/*.pth
+ai-service/models/*.onnx
+
+# Logs
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+backups/

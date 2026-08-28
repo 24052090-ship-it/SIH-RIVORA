@@ -1,0 +1,10 @@
+path: ./ai-service/dataset
+train: images/train
+val: images/val
+names:
+  0: blocked_drain
+  1: overflowing_drain
+  2: flooded_road
+  3: waterlogging
+  4: open_manhole
+  5: garbage_blockage

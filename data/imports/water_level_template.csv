@@ -1,0 +1,2 @@
+sensor_id,timestamp_utc,latitude,longitude,water_level_cm,capacity_cm,source
+SN-001,2026-01-01T00:00:00Z,12.9350,77.6240,10,100,REPLACE_WITH_SOURCE

@@ -1,0 +1,69 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: aquaguard
+      POSTGRES_USER: aquaguard
+      POSTGRES_PASSWORD: aquaguard
+    ports:
+      - "5433:5432"
+    volumes:
+      - aquaguard_sih_pgdata:/var/lib/postgresql/data
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aquaguard -d aquaguard"]
+      interval: 5s
+      timeout: 4s
+      retries: 20
+
+  ai:
+    build:
+      context: ./ai-service
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+  backend:
+    build:
+      context: ./backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai:
+        condition: service_healthy
+    environment:
+      PORT: 5000
+      DATABASE_URL: postgresql://aquaguard:aquaguard@postgres:5432/aquaguard
+      JWT_SECRET: sih-demo-change-before-production
+      CORS_ORIGIN: http://localhost:8080
+      DEVICE_API_KEY: sih-demo-device-key
+      WEATHER_SYNC_ENABLED: "true"
+      WEATHER_SYNC_INTERVAL_MS: 900000
+      WEATHER_LATITUDE: 12.9352
+      WEATHER_LONGITUDE: 77.6245
+      WEATHER_TIMEZONE: Asia/Kolkata
+      WEATHER_STATION_CODE: WX-BLR-01
+      AI_SERVICE_URL: http://ai:8000
+      SATELLITE_ENABLED: "false"
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY:-}
+      SENTINEL_HUB_CLIENT_ID: ${SENTINEL_HUB_CLIENT_ID:-}
+      SENTINEL_HUB_CLIENT_SECRET: ${SENTINEL_HUB_CLIENT_SECRET:-}
+    command: ["sh", "-c", "node src/db/migrate.js && node src/db/seed.js && node src/server.js"]
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend-deploy/Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+
+volumes:
+  aquaguard_sih_pgdata:

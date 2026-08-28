@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { requireAuth, requireRole } from '../middleware/auth.js';
+import { predictiveMaintenance, analyticsSummary, analyticsTrends, satelliteStatus, satelliteObservations } from '../controllers/phase8Controller.js';
+const r=Router();
+r.get('/maintenance/predictions',requireAuth,requireRole('authority'),predictiveMaintenance);
+r.get('/analytics/summary',requireAuth,requireRole('authority'),analyticsSummary);
+r.get('/analytics/trends',requireAuth,requireRole('authority'),analyticsTrends);
+r.get('/satellite/status',requireAuth,requireRole('authority'),satelliteStatus);
+r.get('/satellite/observations',requireAuth,requireRole('authority'),satelliteObservations);
+export default r;

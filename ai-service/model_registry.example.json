@@ -1,0 +1,16 @@
+{
+  "flood_model": {
+    "name": "aquaguard-flood-xgb",
+    "version": "real-candidate-v1",
+    "status": "CANDIDATE",
+    "dataset_version": "approved-dataset-v1",
+    "artifact": "aquaguard-flood-xgb-real-candidate.json"
+  },
+  "vision_model": {
+    "name": "aquaguard-yolo",
+    "version": "real-candidate-v1",
+    "status": "CANDIDATE",
+    "dataset_version": "approved-vision-v1",
+    "artifact": "best.pt"
+  }
+}

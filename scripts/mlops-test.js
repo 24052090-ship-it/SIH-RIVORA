@@ -1,0 +1,1 @@
+const base=process.env.API_BASE_URL||'http://localhost:5000/api';const r=await fetch(`${base}/mlops/overview`);if(!r.ok)throw new Error(`MLOps endpoint failed: ${r.status}`);const d=await r.json();if(!Array.isArray(d.models))throw new Error('models missing');console.log(`MLOps OK: ${d.models.length} models, ${d.predictions?.last24h??0} predictions in last 24h`);

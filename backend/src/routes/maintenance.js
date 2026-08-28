@@ -1,0 +1,1 @@
+import {Router} from 'express';import {requireAuth,requireRole} from '../middleware/auth.js';import {listMaintenance} from '../controllers/maintenanceController.js';const r=Router();r.get('/',requireAuth,requireRole('authority'),listMaintenance);export default r;

@@ -1,0 +1,6 @@
+@import '../Login/Auth.css';
+
+/* Signup-specific layout refinements. */
+.auth-form-wrap {
+  min-height: 100%;
+}
